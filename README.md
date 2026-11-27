@@ -37,4 +37,4 @@ Requires Node 18 or later.
 
 **Ordering.** There is one log, offsets only ever increase, and each subscriber processes messages in sequence. So messages are always handled in the order they were published.
 
-**Multiple message types (bonus).** `Broker<T>` is generic. You can use strings, objects or discriminated unions; see the `OrderEvent` example in `src/demo.ts`.
+**Multiple message types.** `Broker<T>` is generic. You can use strings, objects or discriminated unions; see the `OrderEvent` example in `src/demo.ts`.
