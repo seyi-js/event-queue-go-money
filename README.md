@@ -7,6 +7,7 @@ An in-memory message broker using the publish-subscribe pattern, written in Type
 ```bash
 npm install
 npm run demo       # runs the sequence from the brief (20 message logs)
+npm run demo:trace # same, with broker/subscriber flow tracing (TRACE=1)
 npm test           # unit tests (vitest)
 npm run typecheck  # tsc --noEmit
 ```

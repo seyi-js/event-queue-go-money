@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "demo": "tsx src/demo.ts",
+    "demo:trace": "TRACE=1 tsx src/demo.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "build": "tsc"

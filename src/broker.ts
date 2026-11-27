@@ -1,3 +1,4 @@
+import { trace } from "./trace.js";
 import type { Consumer, Message } from "./types.js";
 
 /**
@@ -18,6 +19,7 @@ export class Broker<T = string> {
       publishedAt: new Date(),
     });
     this.log.push(message);
+    trace("broker", `append offset=${message.offset} → log size ${this.log.length}, notifying ${this.consumers.size} subscriber(s)`);
     for (const consumer of this.consumers.values()) consumer.drain();
     return message;
   }
@@ -32,8 +34,12 @@ export class Broker<T = string> {
 
   /** Register a subscriber. Returns false if it was already registered. */
   register(consumer: Consumer): boolean {
-    if (this.consumers.has(consumer.id)) return false;
+    if (this.consumers.has(consumer.id)) {
+      trace("broker", `register ${consumer.id} → already registered, no-op`);
+      return false;
+    }
     this.consumers.set(consumer.id, consumer);
+    trace("broker", `register ${consumer.id} → ok (${this.consumers.size} subscriber(s))`);
     return true;
   }
 
