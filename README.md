@@ -16,14 +16,14 @@ Requires Node 18 or later.
 
 ## Structure
 
-| File | Role |
-| --- | --- |
-| `src/broker.ts` | `Broker<T>`: append-only log, subscriber registry, `append` / `read` / `register` |
-| `src/publisher.ts` | `Publisher<T>`: writes messages to the broker |
-| `src/subscriber.ts` | `Subscriber<T>`: subscribes once, keeps its own offset, processes messages in order |
-| `src/types.ts` | `Message<T>`, `Handler<T>`, `Consumer` |
-| `src/demo.ts` | The example sequence from the brief, plus a non-string payload example |
-| `test/broker.test.ts` | Tests for each requirement |
+| File                  | Role                                                                                |
+| --------------------- | ----------------------------------------------------------------------------------- |
+| `src/broker.ts`       | `Broker<T>`: append-only log, subscriber registry, `append` / `read` / `register`   |
+| `src/publisher.ts`    | `Publisher<T>`: writes messages to the broker                                       |
+| `src/subscriber.ts`   | `Subscriber<T>`: subscribes once, keeps its own offset, processes messages in order |
+| `src/types.ts`        | `Message<T>`, `Handler<T>`, `Consumer`                                              |
+| `src/demo.ts`         | The example sequence from the brief, plus a non-string payload example              |
+| `test/broker.test.ts` | Tests for each requirement                                                          |
 
 ## Design decisions
 
@@ -38,12 +38,3 @@ Requires Node 18 or later.
 **Ordering.** There is one log, offsets only ever increase, and each subscriber processes messages in sequence. So messages are always handled in the order they were published.
 
 **Multiple message types (bonus).** `Broker<T>` is generic. You can use strings, objects or discriminated unions; see the `OrderEvent` example in `src/demo.ts`.
-
-## Possible extensions
-
-- **Topics:** one log per topic (`Map<string, Message<T>[]>`).
-- **Consumer groups:** subscribers in a group share one offset, so each message goes to only one member of the group.
-- **Async delivery and acknowledgements:** async handlers, advance the offset only after an ack, retries and a dead-letter queue.
-- **Start position:** let a subscriber choose `earliest` or `latest`.
-- **Retention:** trim the log once every subscriber has read past a given offset.
-- **Persistence:** keep the log and the offsets in durable storage.
